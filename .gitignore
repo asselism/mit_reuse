@@ -1,4 +1,5 @@
 mit-reuse-venv/
 db.sqlite3
-mit_reuse/__pycache__
-reuse_app/__pycache__
+mit_reuse/__pycache__/
+reuse_app/__pycache__/
+reuse_app/migrations/__pycache__/

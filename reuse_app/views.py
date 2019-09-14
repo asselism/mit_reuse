@@ -41,5 +41,9 @@ class Login(FormView):
         #print(form.user)
         return super().form_valid(form)
 
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
+
 def index(request):
     return HttpResponse('Hello there')

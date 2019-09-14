@@ -7,5 +7,5 @@ class Listing(models.Model):
     title = models.CharField('Title', max_length=32, validators = (
         validators.MinLengthValidator(5),)
     )
-    loc_text = models.CharField('Where ?', max_length=32, blank = True)
+    loc_text = models.CharField('Where?', max_length=32, blank = True)
     description = models.TextField('Description', max_length = 1024)

@@ -8,6 +8,52 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
   <body>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+        <span>
+          <h2 class="is-size-3">MIT</h2>
+        </span>
+        <span class="icon is-large">
+          <i class="fas fa-2x fa-recycle"></i>
+        </span>
+        </a>
+
+        <a role="button" class="navbar-burger burger right" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Home
+          </a>
+          <a class="navbar-item">
+            About
+          </a>
+          <a class="navbar-item">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item" right>
+            <div class="buttons">
+              <a class="button is-primary is-outlined is-inverted">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light">
+                Log in
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
   <section class="section">
     <div class="container">
       {% block content %}
@@ -16,4 +62,5 @@
   </section>
   </body>
 </html>
+
 

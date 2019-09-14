@@ -1,0 +1,10 @@
+{% extends 'reuse_app/base.html' %}
+{% load bulma_tags %}
+
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form | bulma }}
+  <input type="submit" id="submit" value="Register">
+</form>
+{% endblock %}

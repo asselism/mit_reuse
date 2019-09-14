@@ -78,9 +78,19 @@ class ListingView(DetailView):
     context_object_name = 'listing'
     template_name = 'reuse_app/listing_view.html'
 
+class ListingListUser(LoginRequiredMixin, ListView):
+    model = Listing
+    context_object_name = 'listings'
+    template_name = 'reuse_app/listing_list.html'
+
+    def get_queryset(self):
+        return Listing.objects.filter(user = self.request.user)
+
+
 class ListingList(ListView):
     model = Listing
     context_object_name = 'listings'
+    template_name = 'reuse_app/listing_list.html'
 
 def logout(request):
     auth.logout(request)

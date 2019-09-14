@@ -5,6 +5,7 @@ from . import views
 app_name = 'reuse_app'
 urlpatterns = [
     path('', views.ListingList.as_view(), name='index'),
+    path('mine', views.ListingListUser.as_view(), name='listings_list_user'),
     path('register', views.Register.as_view(), name='register'),
     path('login', views.Login.as_view(), name='login'),
     path('logout', views.logout, name='logout'),

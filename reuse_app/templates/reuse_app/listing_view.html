@@ -1,0 +1,17 @@
+{% extends 'reuse_app/base.html' %}
+{% block content %}
+<h1>{{listing.title}} </h1>
+<p>
+  {{listing.loc_text}}
+</p>
+<p>
+  {{ listing.description }}
+</p>
+
+{% if listing.user == user %}
+<a href="{% url 'reuse_app:listing_update' listing.pk %}">
+  Edit listing
+</a>
+{% endif %}
+
+{% endblock content %}

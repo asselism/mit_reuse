@@ -2,10 +2,13 @@ from django.urls import path
 
 from . import views
 
-
+app_name = 'reuse_app'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.ListingList.as_view(), name='index'),
     path('register', views.Register.as_view(), name='register'),
     path('login', views.Login.as_view(), name='login'),
     path('logout', views.logout, name='logout'),
+    path('create', views.ListingCreate.as_view(), name='listing_create'),
+    path('update/<int:pk>', views.ListingUpdate.as_view(), name='listing_update'),
+    path('view/<int:pk>', views.ListingView.as_view(), name='listing_view'),
 ]

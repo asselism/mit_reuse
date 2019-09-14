@@ -1,0 +1,13 @@
+{% extends 'reuse_app/base.html' %}
+{% block content %}
+<ul>
+{% for listing in listings %}
+  <li>
+    <a href="{% url 'reuse_app:listing_view' listing.pk %}">
+      {{ listing.title }}
+    </a>
+  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -17,8 +17,13 @@ let listings = [
     <p class="has-text-weight-bold is-size-6">
       {{listing.title}}
     </p>
+    {% if listing.marked_taken %}
+    <p class=" is-size-6 has-text-info">
+      May not be there
+    </p>
+    {% endif %}
     <p class="is-size-6">
-      {{listing.updated_at | timesince }} ago
+      Updated {{listing.updated_at | timesince }} ago
     </p>
     <a class="button is-primary is-small is-fullwidth"
       href="{% url 'reuse_app:listing_view' listing.pk %}">

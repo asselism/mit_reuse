@@ -2,12 +2,14 @@ from django.db import models
 from django.core import validators
 from django.contrib.auth.models import User
 from django import forms
+from datetime import datetime, timedelta
 
 class CoordinateField(models.DecimalField):
     def __init__(self, **kwargs):
         kwargs['max_digits'] = 9
         kwargs['decimal_places'] = 6
         super().__init__(**kwargs)
+
 
 class Listing(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
@@ -21,3 +23,10 @@ class Listing(models.Model):
 
     updated_at = models.DateTimeField(auto_now = True)
     marked_taken = models.BooleanField(default = False)
+
+    def is_archived():
+        return udpated_at < Listing.get_achived_t()
+
+    @staticmethod
+    def get_archived_t():
+        return datetime.now() - timedelta(hours=8)

@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
+from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.list import ListView
@@ -134,11 +135,26 @@ class ListingTaken(LoginRequiredMixin, ListingView):
         listing.save()
         return redirect('reuse_app:listing_view', pk)
     
-
-class ListingListUser(LoginRequiredMixin, ListView):
+class ListingListUser(LoginRequiredMixin, TemplateView):
     model = Listing
     context_object_name = 'listings'
     template_name = 'reuse_app/listing_list.html'
+
+    def get_context_data(self):
+        listings = Listing.objects.exclude(
+            marked_taken = True
+        ).exclude(
+            updated_at__lt = Listing.get_archived_t()
+        )
+        listings_action = Listing.objects.exclude(
+            marked_taken = False, updated_at__gte = Listing.get_archived_t()
+        )
+
+        return {
+            'listings': listings,
+            'listings_action': listings_action
+        }
+
 
     def get_queryset(self):
         return Listing.objects.filter(user = self.request.user)
@@ -150,6 +166,12 @@ class ListingList(ListView):
     extra_context = {
         'MAPS_API_KEY': MAPS_API_KEY
     }
+
+    def get_queryset(self):
+        return Listing.objects.exclude(
+            updated_at__lt =  Listing.get_archived_t()
+        )
+
 
 def logout(request):
     auth.logout(request)

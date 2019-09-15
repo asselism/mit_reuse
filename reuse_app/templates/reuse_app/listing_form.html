@@ -8,7 +8,14 @@
   {{ form.errors }}
   {{ form | bulma}}
   <div id="map"></div>
-  <input class="button is-primary" type="submit" id="submit" value="{{ submit_value }}">
+  <div class="buttons">
+    <input class="button is-primary" type="submit" id="submit" value="{{ submit_value }}">
+    {% if pk %}
+    <a href="{% url 'reuse_app:listing_delete' pk %}" class="button is-danger">
+      Delete
+    </a>
+    {% endif %}
+  </div>
 </form>
 {% endblock %}
 

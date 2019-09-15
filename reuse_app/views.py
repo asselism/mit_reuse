@@ -10,6 +10,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.list import ListView
+from django.utils import timezone
 from mit_reuse.settings import MAPS_API_KEY
 
 from .models import *
@@ -76,11 +77,8 @@ class ListingCreate(LoginRequiredMixin, CreateView):
         listing.save()
         return redirect('reuse_app:listing_view', listing.pk)
 
-def get_listing_or_403(view):
-    listing = get_object_or_404(Listing,
-        pk = view.kwargs.get('pk', '')
-    )
-    user = view.request.user
+def get_listing_or_403(pk, user):
+    listing = get_object_or_404(Listing, pk = pk)
     if user.is_superuser or listing.user == user:
         return listing
     else:
@@ -95,7 +93,7 @@ class ListingUpdate(LoginRequiredMixin, UpdateView):
     }
 
     def get_object(self, queryset = None):
-        return get_listing_or_403(self)
+        return get_listing_or_403(self.kwargs.get('pk'), self.request.user)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -110,10 +108,7 @@ class ListingUpdate(LoginRequiredMixin, UpdateView):
 
 class ListingDelete(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
-        self.kwargs = kwargs
-        self.request = request
-
-        listing = get_listing_or_403(self)
+        listing = get_listing_or_403(kwargs['pk'], request.user)
         listing.delete()
 
         return redirect('reuse_app:listings_list_user')
@@ -173,6 +168,13 @@ class ListingList(ListView):
             updated_at__lt =  Listing.get_archived_t()
         )
 
+class ListingStillAvailable(View):
+    def get(self, request, pk):
+        listing = get_listing_or_403(pk, request.user)
+        listing.marked_taken = False
+        listing.save()
+
+        return redirect('reuse_app:listings_list_user')
 
 def logout(request):
     auth.logout(request)

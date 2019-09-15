@@ -3,7 +3,7 @@
 
 {% block content %}
 {% if listings_action %}
-  <h1 class="title">Action Required Listings </h1>
+  <h1 class="title">Action Required</h1>
 
   {% for listing in listings_action %}
     <div class="card">
@@ -25,13 +25,21 @@
       </header>
       <div class="card-content">
         <div class="content">
+          <p>
           {{ listing.description|truncatewords_html:20 }}
+          </p>
+          <div class="buttons">
+            <a href="{% url 'reuse_app:listing_still_available' listing.pk %}"
+               class="button is-primary">
+              Still available
+            </a>
+            <a href="{% url 'reuse_app:listing_delete' listing.pk %}"
+               class="button is-danger">
+              Delete
+            </a>
+          </div>
         </div>
       </div>
-      <footer class="card-footer">
-        <a href="{% url 'reuse_app:listing_view' listing.pk %}" class="card-footer-item">Still available</a>
-        <a href="{% url 'reuse_app:listing_update' listing.pk %}" class="card-footer-item">Delete</a>
-      </footer>
     </div>
     <br>
   {% endfor %}
@@ -49,13 +57,26 @@
       </header>
       <div class="card-content">
         <div class="content">
-          {{ listing.description|truncatewords_html:20 }}
+          <p>
+            {{ listing.description|truncatewords_html:20 }}
+          </p>
+          <div class="buttons">
+            <a href="{% url 'reuse_app:listing_view' listing.pk %}"
+               class="button is-primary">
+              View
+            </a>
+            <a href="{% url 'reuse_app:listing_update' listing.pk %}"
+               class="button is-dark">
+              Edit
+            </a>
+            <a href="{% url 'reuse_app:listing_delete' listing.pk %}"
+               class="button is-danger">
+              Delete
+            </a>
+          </div>
+
         </div>
       </div>
-      <footer class="card-footer">
-        <a href="{% url 'reuse_app:listing_view' listing.pk %}" class="card-footer-item">View</a>
-        <a href="{% url 'reuse_app:listing_update' listing.pk %}" class="card-footer-item">Edit/Delete</a>
-      </footer>
     </div>
     <br>
   {% endfor %}

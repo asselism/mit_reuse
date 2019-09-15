@@ -33,35 +33,72 @@
         </div>
 
         <div class="navbar-end">
-          {% if user.is_authenticated %}
-          <div class="navbar-item" right>
-            <div class="buttons">
-              <a class="button is-primary is-outlined is-inverted" href="{% url 'reuse_app:listing_create' %}">
+          <div class="is-hidden-tablet">
+            {% if user.is_authenticated %}
+            <div class="navbar-item" >
+              <a class="button is-primary is-outlined is-fullwidth" href="{% url 'reuse_app:listing_create' %}">
                 New listing 
               </a>
-              <a class="button is-primary is-outlined is-inverted" href="{% url 'reuse_app:register' %}">
-                My listings
-              </a>
-              <a class="button is-light" href="{% url 'reuse_app:logout' %}">
-                Logout
+            </div>
+
+            <div class="navbar-item" >
+              <a class="button is-primary is-outlined is-fullwidth" href="{% url 'reuse_app:listings_list_user' %}">
+                My listings 
               </a>
             </div>
-          </div>
 
-          {% else %}
-          <div class="navbar-item" right>
-            <div class="buttons">
-              <a class="button is-primary is-outlined is-inverted" href="{% url 'reuse_app:register' %}">
-                <strong>Sign up</strong>
+            <div class="navbar-item" >
+              <a class="button is-light is-fullwidth" href="{% url 'reuse_app:logout' %}">
+               Logout 
               </a>
-              <a class="button is-light" href="{% url 'reuse_app:login' %}">
+            </div>
+
+            {% else %}
+            <div class="navbar-item" >
+              <a class="button is-primary is-fullwidth" href="{% url 'reuse_app:register' %}">
+                Sign up
+              </a>
+            </div>
+
+            <div class="navbar-item" >
+              <a class="button is-light is-fullwidth" href="{% url 'reuse_app:login' %}">
                 Log in
               </a>
             </div>
+            {% endif %}
           </div>
-          {% endif %}
+
+          <div class="is-hidden-mobile">
+            {% if user.is_authenticated %}
+            <div class="navbar-item" >
+              <div class="buttons">
+                <a class="button is-primary is-outlined is-inverted" href="{% url 'reuse_app:listing_create' %}">
+                  New listing 
+                </a>
+                <a class="button is-primary is-outlined is-inverted" href="{% url 'reuse_app:listings_list_user' %}">
+                  My listings 
+                </a>
+                <a class="button is-light" href="{% url 'reuse_app:logout' %}">
+                 Logout 
+                </a>
+              </div>
+            </div>
+
+            {% else %}
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary is-outlined is-inverted" href="{% url 'reuse_app:register' %}">
+                  Sign up
+                </a>
+                <a class="button is-light" href="{% url 'reuse_app:login' %}">
+                  Log in
+                </a>
+              </div>
+            </div>
+            {% endif %}
+          </div>
         </div>
-      </div>
+
     </nav>
   <section class="section">
     <div class="container">

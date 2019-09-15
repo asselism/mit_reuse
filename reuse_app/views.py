@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.urls import reverse
 
 from .models import *
 
@@ -40,7 +41,6 @@ class Login(FormView):
             return FormView.get(self, request)
 
     def form_valid(self, form):
-        print(self.request)
         user = auth.authenticate(**form.cleaned_data)
         auth.login(self.request, user)
 
@@ -76,7 +76,6 @@ class ListingUpdate(LoginRequiredMixin, UpdateView):
     model = Listing
     #fields = listing_fields
     form_class = ListingForm
-    success_url = '/'
     extra_context = {
         'submit_value': 'Update Listing'
     }
@@ -90,7 +89,13 @@ class ListingUpdate(LoginRequiredMixin, UpdateView):
             return listing
         else:
             raise PermissionDenied
-           
+
+    def get_success_url(self):
+        return reverse(
+            'reuse_app:listing_view',
+            args=[self.kwargs.get(self.pk_url_kwarg, '')]
+        )
+
 class ListingView(DetailView):
     model = Listing
     context_object_name = 'listing'

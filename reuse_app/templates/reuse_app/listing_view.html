@@ -4,8 +4,22 @@
 {% block content %}
 
 <h1 class="title">{{listing.title}} </h1>
-<p >
-  <em> {{listing.loc_text}} </em>
+{% if listing.marked_taken %}
+<h2 class="subtitle has-text-link">
+  May be taken
+</h2>
+{% endif %}
+<p>
+  <strong>
+    Location: 
+  </strong>
+  {{ listing.loc_text }}
+</p>
+<p>
+  <strong>
+    Last activity:
+  </strong>
+  {{ listing.updated_at | timesince }} ago
 </p>
 <p>
   {{ listing.description }}
@@ -13,11 +27,20 @@
 <br>
 <div id="map"></div>
 
-{% if listing.user == user %}
-   <a class="button is-primary is-outlined " href="{% url 'reuse_app:listing_update' listing.pk %}">
-   Edit listing
-   </a>
-{% endif %}
+<div class="buttons">
+  {% if listing.user == user %}
+  <a class="button is-primary"
+     href="{% url 'reuse_app:listing_update' listing.pk %}">
+    Edit Listing
+  </a>
+  {% elif not listing.marked_taken and user %}
+  <a class="button is-warning"
+     href="{% url 'reuse_app:listing_taken' listing.pk %}">
+    Mark as Taken
+  </a>
+  {% endif %}
+
+</div>
 
 
 {% endblock content %}

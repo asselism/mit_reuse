@@ -18,4 +18,6 @@ class Listing(models.Model):
     loc_lat = CoordinateField(default = 42.3598)
     loc_lng = CoordinateField(default = -71.0921)
     description = models.TextField('Description', max_length = 1024)
+
     updated_at = models.DateTimeField(auto_now = True)
+    marked_taken = models.BooleanField(default = False)

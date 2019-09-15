@@ -125,6 +125,16 @@ class ListingView(DetailView):
         'MAPS_API_KEY': MAPS_API_KEY
     }
 
+class ListingTaken(LoginRequiredMixin, ListingView):
+    template_name = 'reuse_app/listing_taken.html'
+
+    def post(self, request, pk):
+        listing = get_object_or_404(Listing, pk = pk)
+        listing.marked_taken = True
+        listing.save()
+        return redirect('reuse_app:listing_view', pk)
+    
+
 class ListingListUser(LoginRequiredMixin, ListView):
     model = Listing
     context_object_name = 'listings'

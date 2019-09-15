@@ -31,6 +31,6 @@
 </script>
 <script src="{% static 'js/map.js' %}"></script>
 <script
-   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGt5cEhnpZUFq4z9dRNqTuCUt2c-KZyNE&callback=init_details_view"
+    src="https://maps.googleapis.com/maps/api/js?key={{ MAPS_API_KEY }}&callback=init_details_view"
         async defer></script>
 {% endblock script %}

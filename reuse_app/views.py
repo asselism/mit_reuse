@@ -9,6 +9,7 @@ from django.views import View
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic.list import ListView
+from mit_reuse.settings import MAPS_API_KEY
 
 from .models import *
 
@@ -64,7 +65,8 @@ class ListingCreate(LoginRequiredMixin, CreateView):
     #fields = listing_fields
     form_class = ListingForm
     extra_context = {
-        'submit_value': 'Create Listing'
+        'submit_value': 'Create Listing',
+        'MAPS_API_KEY': MAPS_API_KEY
     }
 
     def form_valid(self, form):
@@ -87,7 +89,8 @@ class ListingUpdate(LoginRequiredMixin, UpdateView):
     model = Listing
     form_class = ListingForm
     extra_context = {
-        'submit_value': 'Update Listing'
+        'submit_value': 'Update Listing',
+        'MAPS_API_KEY': MAPS_API_KEY
     }
 
     def get_object(self, queryset = None):
@@ -118,6 +121,9 @@ class ListingView(DetailView):
     model = Listing
     context_object_name = 'listing'
     template_name = 'reuse_app/listing_view.html'
+    extra_context = {
+        'MAPS_API_KEY': MAPS_API_KEY
+    }
 
 class ListingListUser(LoginRequiredMixin, ListView):
     model = Listing
@@ -131,6 +137,9 @@ class ListingList(ListView):
     model = Listing
     context_object_name = 'listings'
     template_name = 'reuse_app/listing_map.html'
+    extra_context = {
+        'MAPS_API_KEY': MAPS_API_KEY
+    }
 
 def logout(request):
     auth.logout(request)

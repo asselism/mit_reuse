@@ -141,12 +141,13 @@ class ListingListUser(LoginRequiredMixin, TemplateView):
     template_name = 'reuse_app/listing_list.html'
 
     def get_context_data(self):
-        listings = Listing.objects.exclude(
+        user_listings = Listing.objects.filter(user = self.request.user)
+        listings = user_listings.exclude(
             marked_taken = True
         ).exclude(
             updated_at__lt = Listing.get_archived_t()
         )
-        listings_action = Listing.objects.exclude(
+        listings_action = user_listings.exclude(
             marked_taken = False, updated_at__gte = Listing.get_archived_t()
         )
 

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h1 class="title">My listings </h1>
+<h1 class="title">My Listings </h1>
 
 {% for listing in listings %}
   <div class="card">
@@ -21,6 +21,7 @@
       <a href="{% url 'reuse_app:listing_update' listing.pk %}" class="card-footer-item">Edit/Delete</a>
     </footer>
   </div>
+  <br>
 {% endfor %}
 {% endblock %}
 

@@ -65,7 +65,8 @@ function init_list_view() {
                 'lat': listing['lat'],
                 'lng': listing['lng']
             },
-            title: listing['title']
+            title: listing['title'],
+            icon: listing['icon']
         });
         marker.addListener('click', () => {
             if (infoWindow) {

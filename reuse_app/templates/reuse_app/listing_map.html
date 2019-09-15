@@ -26,7 +26,11 @@ let listings = [
     </a>
   `,
   'lat': {{ listing.loc_lat }},
-  'lng': {{ listing.loc_lng }},
+  'lng': {{ listing.loc_lng }}
+  {% if listing.marked_taken %}
+  ,
+  'icon': '{% static 'pin-gray.png' %}'
+  {% endif %}
 } {% if not forloop.last %}, {% endif %}
 {% endfor %}
 ];

@@ -18,7 +18,7 @@ let listings = [
       {{listing.title}}
     </p>
     <p class="is-size-6">
-      {{listing.updated_at |timesince }} ago
+      {{listing.updated_at | timesince }} ago
     </p>
     <a class="button is-primary is-small is-fullwidth"
       href="{% url 'reuse_app:listing_view' listing.pk %}">

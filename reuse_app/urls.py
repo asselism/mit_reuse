@@ -12,6 +12,7 @@ urlpatterns = [
     path('create', views.ListingCreate.as_view(), name='listing_create'),
     path('update/<int:pk>', views.ListingUpdate.as_view(), name='listing_update'),
     path('view/<int:pk>', views.ListingView.as_view(), name='listing_view'),
+    path('mark_taken/<int:pk>', views.ListingTaken.as_view(), name='listing_taken'),
     path('delete/<int:pk>', views.ListingDelete.as_view(),
         name='listing_delete'),
 ]

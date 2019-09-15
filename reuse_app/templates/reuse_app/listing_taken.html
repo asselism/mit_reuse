@@ -1,0 +1,26 @@
+{% extends 'reuse_app/base.html' %}
+
+{% block content %}
+<article class="message is-warning">
+  <div class="message-header">
+    <p>Mark as Taken</p>
+  </div>
+  <div class="message-body">
+    <p>
+      Are you sure <em>{{ listing.title }}</em> is taken?
+      Then, please mark it, so other users don't waste their time.
+    </p>
+    <br>
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="buttons">
+        <input type="submit" class="button is-warning" value="Mark as taken">
+        <a class="button is-primary">
+          Back
+        </a>
+      </div>
+    </form>
+  </div>
+</article>
+{% endblock content %}

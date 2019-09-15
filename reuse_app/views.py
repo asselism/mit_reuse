@@ -1,13 +1,14 @@
-from django.core.exceptions import PermissionDenied
 from django.contrib import auth
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic.edit import CreateView, UpdateView, FormView
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
 from django.urls import reverse
+from django.views import View
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.views.generic.list import ListView
 
 from .models import *
 
@@ -70,31 +71,48 @@ class ListingCreate(LoginRequiredMixin, CreateView):
         listing = form.save(commit = False)
         listing.user = self.request.user
         listing.save()
-        return redirect('/')
+        return redirect('reuse_app:listing_view', listing.pk)
+
+def get_listing_or_403(view):
+    listing = get_object_or_404(Listing,
+        pk = view.kwargs.get('pk', '')
+    )
+    user = view.request.user
+    if user.is_superuser or listing.user == user:
+        return listing
+    else:
+        raise PermissionDenied
 
 class ListingUpdate(LoginRequiredMixin, UpdateView):
     model = Listing
-    #fields = listing_fields
     form_class = ListingForm
     extra_context = {
         'submit_value': 'Update Listing'
     }
 
     def get_object(self, queryset = None):
-        listing = get_object_or_404(Listing,
-            pk = self.kwargs.get(self.pk_url_kwarg, '')
-        )
-        user = self.request.user
-        if user.is_superuser or listing.user == user:
-            return listing
-        else:
-            raise PermissionDenied
+        return get_listing_or_403(self)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['pk'] = self.kwargs.get(self.pk_url_kwarg, '')
+        return context
 
     def get_success_url(self):
         return reverse(
             'reuse_app:listing_view',
             args=[self.kwargs.get(self.pk_url_kwarg, '')]
         )
+
+class ListingDelete(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        self.kwargs = kwargs
+        self.request = request
+
+        listing = get_listing_or_403(self)
+        listing.delete()
+
+        return redirect('reuse_app:listings_list_user')
 
 class ListingView(DetailView):
     model = Listing

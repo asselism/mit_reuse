@@ -39,7 +39,7 @@
         </div>
 
         <div class="navbar-end">
-          <div class="is-hidden-tablet">
+          <div class="is-hidden-desktop">
             {% if user.is_authenticated %}
             <div class="navbar-item" >
               <a class="button is-primary is-outlined is-fullwidth" href="{% url 'reuse_app:listing_create' %}">
@@ -74,7 +74,7 @@
             {% endif %}
           </div>
 
-          <div class="is-hidden-mobile">
+          <div class="is-hidden-touch">
             {% if user.is_authenticated %}
             <div class="navbar-item" >
               <div class="buttons">

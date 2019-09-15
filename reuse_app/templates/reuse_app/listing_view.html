@@ -2,20 +2,21 @@
 {% load static %}
 
 {% block content %}
-<h1>{{listing.title}} </h1>
-<p>
-  {{listing.loc_text}}
+
+<h1 class="title">{{listing.title}} </h1>
+<p >
+  <em> {{listing.loc_text}} </em>
 </p>
 <p>
   {{ listing.description }}
 </p>
-
+<br>
 <div id="map"></div>
 
 {% if listing.user == user %}
-<a href="{% url 'reuse_app:listing_update' listing.pk %}">
-  Edit listing
-</a>
+   <a class="button is-primary is-outlined " href="{% url 'reuse_app:listing_update' listing.pk %}">
+   Edit listing
+   </a>
 {% endif %}
 
 

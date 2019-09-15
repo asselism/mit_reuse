@@ -1,0 +1,30 @@
+{% extends 'reuse_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1 class="title">Listing </h1>
+<div id="map" style="height:600px;"></div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+let listings = [
+{% for listing in listings %}
+{
+  'title': '{{ listing.title }}',
+  'description': '{{ listing.description }}',
+  'location': '{{ listing.loc_text }}',
+  'lat': {{ listing.loc_lat }},
+  'lng': {{ listing.loc_lng }},
+  'url': '{% url 'reuse_app:listing_view' listing.pk %}'
+} {% if not forloop.last %}, {% endif %}
+{% endfor %}
+];
+</script>
+<script src="{% static 'js/map.js' %}"></script>
+<script
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGt5cEhnpZUFq4z9dRNqTuCUt2c-KZyNE&callback=init_list_view"
+        async defer></script>
+
+{% endblock %}

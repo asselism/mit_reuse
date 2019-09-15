@@ -72,7 +72,7 @@ function init_list_view() {
                 infoWindow.close();
             }
             infoWindow = new google.maps.InfoWindow({
-                content: '<h2>' + listing['title'] + '</h2>'
+                content: listing['body']
             });
             infoWindow.open(map, marker);
         });

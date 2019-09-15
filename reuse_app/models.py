@@ -3,15 +3,7 @@ from django.core import validators
 from django.contrib.auth.models import User
 from django import forms
 
-coord_kwargs = {
-    'max_digits': 9,
-    'decimal_places': 6,
-    'widget': forms.HiddenInput()
-}
-
 class CoordinateField(models.DecimalField):
-    widget = forms.HiddenInput()
-
     def __init__(self, **kwargs):
         kwargs['max_digits'] = 9
         kwargs['decimal_places'] = 6

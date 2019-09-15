@@ -47,9 +47,24 @@ class Login(FormView):
         url = self.request.GET.get('next', '/')
         return redirect(url)
 
+listing_fields = ('title', 'loc_text', 'description', 'loc_lat', 'loc_lng')
+
+class ListingForm(forms.ModelForm):
+    class Meta:
+        model = Listing
+        fields = ('title', 'loc_text', 'description', 'loc_lat', 'loc_lng')
+        widgets = {
+            'loc_lat': forms.HiddenInput(),
+            'loc_lng': forms.HiddenInput()
+        }
+
 class ListingCreate(LoginRequiredMixin, CreateView):
     model = Listing
-    fields = ['title', 'loc_text', 'description']
+    #fields = listing_fields
+    form_class = ListingForm
+    extra_context = {
+        'submit_value': 'Create Listing'
+    }
 
     def form_valid(self, form):
         listing = form.save(commit = False)
@@ -59,9 +74,12 @@ class ListingCreate(LoginRequiredMixin, CreateView):
 
 class ListingUpdate(LoginRequiredMixin, UpdateView):
     model = Listing
-    fields = ['title', 'loc_text', 'description']
-    pk_url_kwarg = 'pk'
+    #fields = listing_fields
+    form_class = ListingForm
     success_url = '/'
+    extra_context = {
+        'submit_value': 'Update Listing'
+    }
 
     def get_object(self, queryset = None):
         listing = get_object_or_404(Listing,
@@ -85,7 +103,6 @@ class ListingListUser(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Listing.objects.filter(user = self.request.user)
-
 
 class ListingList(ListView):
     model = Listing

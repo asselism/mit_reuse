@@ -1,10 +1,22 @@
 {% extends 'reuse_app/base.html' %}
 {% load bulma_tags %}
+{% load static %}
 
 {% block content %}
 <form method="POST">
   {% csrf_token %}
-  {{ form | bulma }}
-  <input type="submit" id="submit" value="Create listing">
+  {{ form.errors }}
+  {{ form | bulma}}
+  <div id="map"></div>
+  <input type="submit" id="submit" value="{{ submit_value }}">
 </form>
+{% endblock %}
+
+{% block script %}
+  <script>
+    let ivan = 'dimitrov';
+  </script>
+<script src="{% static 'js/map_input.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGt5cEhnpZUFq4z9dRNqTuCUt2c-KZyNE&callback=initMap"
+        async defer></script>
 {% endblock %}

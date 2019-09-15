@@ -130,7 +130,7 @@ class ListingListUser(LoginRequiredMixin, ListView):
 class ListingList(ListView):
     model = Listing
     context_object_name = 'listings'
-    template_name = 'reuse_app/listing_list.html'
+    template_name = 'reuse_app/listing_map.html'
 
 def logout(request):
     auth.logout(request)
